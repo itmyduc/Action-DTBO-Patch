@@ -1,0 +1,66 @@
+name: dtbo_patch
+
+on:
+  workflow_dispatch:
+    inputs:
+      ROM_URL:
+        description: 'ROM_URL'
+        required: true
+        default: 'https://bigota.d.miui.com/V12.5.4.0.RJJCNXM/miui_CAS_V12.5.4.0.RJJCNXM_55172411ad_11.0.zip'
+      ROM_Version:
+        description: 'Patch_rate'
+        required: true
+        default: 'CAS_V12.5.4.0.RJJCNXM'
+      Patch_Rate:
+        description: 'Patch_rate'
+        required: true
+        default: '90'
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: 获取本仓库源码...
+        uses: actions/checkout@main
+
+      - name: 获取变量配置...
+        run: |
+          echo "BUILD_TIME=$(date +%s | md5sum | awk '{print substr($1,1,10)}')" >> $GITHUB_ENV
+
+      - name: 配置环境...
+        run: |
+          sudo apt-get install -y git wget git zip unzip curl axel
+
+      - name: 获取Patch工具...
+        run: |
+          git clone https://github.com/XayahSuSuSu/dtbo-tools -b X86-64 $GITHUB_WORKSPACE/dtbo-tools
+
+      - name: 下载ROM...
+        run: |
+          mkdir $GITHUB_WORKSPACE/dtbo-tools/rom
+          axel -n $(nproc) ${{ github.event.inputs.ROM_URL }} -o "$GITHUB_WORKSPACE/dtbo-tools/rom/${{ github.event.inputs.ROM_Version }}.zip" 
+
+      - name: 解压ROM...
+        run: |
+          unzip "$GITHUB_WORKSPACE/dtbo-tools/rom/${{ github.event.inputs.ROM_Version }}.zip" -d "$GITHUB_WORKSPACE/dtbo-tools/rom"
+          
+
+      - name: 修补DTBO...
+        run: |
+          mv $GITHUB_WORKSPACE/dtbo-tools/rom/firmware-update/dtbo.img $GITHUB_WORKSPACE/dtbo-tools/dtbo.img
+          cd $GITHUB_WORKSPACE/dtbo-tools
+          sudo chmod 777 -R *
+          rm Info.txt
+          echo "${{ github.event.inputs.Patch_Rate }}" > Info.txt
+          sed -i 's/\r$//' Patch.sh
+          ./Patch.sh
+          mv dtbo_new.img "${{ github.event.inputs.ROM_Version }}_dtbo_${{ github.event.inputs.Patch_Rate }}.img"
+
+      - name: 上传至Release...
+        uses: ncipollo/release-action@v1.8.0
+        with:
+          artifacts: "${{ github.workspace }}/dtbo-tools/${{ github.event.inputs.ROM_Version }}_dtbo_${{ github.event.inputs.Patch_Rate }}.img"
+          tag: "${{ github.event.inputs.ROM_Version }}"
+          body: "Patched on GitHub Actions"
+          token: ${{ secrets.GITHUB_TOKEN }}
