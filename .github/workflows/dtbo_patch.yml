@@ -8,7 +8,7 @@ on:
         required: true
         default: 'https://bigota.d.miui.com/V12.5.4.0.RJJCNXM/miui_CAS_V12.5.4.0.RJJCNXM_55172411ad_11.0.zip'
       ROM_Version:
-        description: 'Patch_rate'
+        description: 'ROM_Version'
         required: true
         default: 'CAS_V12.5.4.0.RJJCNXM'
       Patch_Rate:
