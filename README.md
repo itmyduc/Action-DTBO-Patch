@@ -1,4 +1,4 @@
-# Action-dtbo-patch
+# Action-DTBO-Patch
 
 > 注意：如果提示失败并在 下载ROM... 时出现 Error: Process completed with exit code 127. 系服务器网络问题，请重试
 
