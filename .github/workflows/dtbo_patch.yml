@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       ROM_URL:
-        description: 'ROM_URL'
+        description: 'https://bigota.d.miui.com/21.12.8/miui_PICASSO_21.12.8_cfe585c639_11.0.zip'
         required: true
-        default: 'https://bigota.d.miui.com/V12.5.4.0.RJJCNXM/miui_CAS_V12.5.4.0.RJJCNXM_55172411ad_11.0.zip'
+        default: 'https://bigota.d.miui.com/21.12.8/miui_PICASSO_21.12.8_cfe585c639_11.0.zip'
       ROM_Version:
-        description: 'ROM_Version'
+        description: 'miui_PICASSO_21.12.8'
         required: true
-        default: 'CAS_V12.5.4.0.RJJCNXM'
+        default: 'miui_PICASSO_21.12.8'
       Patch_Rate:
-        description: 'Patch_rate'
+        description: '90'
         required: true
         default: '90'
 
