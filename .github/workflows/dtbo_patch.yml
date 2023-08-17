@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       ROM_URL:
-        description: 'https://bigota.d.miui.com/V12.0.1.0.PDEMIXM/miui_MIMIX2Global_V12.0.1.0.PDEMIXM_64006b3102_9.0.zip'
+        description: 'https://down.warbler.cc/XiaoMi-Mix-2/MIUI-TR/MIUITR_MIMIX2_CHIRON_M12.5-A10_21.3.3.zip'
         required: true
-        default: 'https://bigota.d.miui.com/V12.0.1.0.PDEMIXM/miui_MIMIX2Global_V12.0.1.0.PDEMIXM_64006b3102_9.0.zip'
+        default: 'https://down.warbler.cc/XiaoMi-Mix-2/MIUI-TR/MIUITR_MIMIX2_CHIRON_M12.5-A10_21.3.3.zip'
       ROM_Version:
-        description: 'miui_MIMIX2Global_V12.0.1.0'
+        description: 'MIUITR_MIMIX2_CHIRON_M12.5-A10_21.3.3'
         required: true
-        default: 'miui_MIMIX2Global_V12.0.1.0'
+        default: 'MIUITR_MIMIX2_CHIRON_M12.5-A10_21.3.3'
       Patch_Rate:
         description: '90'
         required: true
